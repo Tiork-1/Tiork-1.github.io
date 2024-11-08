@@ -33,7 +33,7 @@ body {
 .songer{
     position: absolute;
     top: 14%;
-    left: 35%;
+    left: 45%;
     color: rgba(50,50,50,0.4);
     font-weight: bold;
     font-size: clamp(1.3vh, 2vh, 2vh);
@@ -61,14 +61,29 @@ body {
 }
 
 
+.icons{
+    position: absolute;
+    width: 76%;
+    height: 30%;
+    display: flex;
+    left: 10%;
+    top: 85%;
+    /*background-color: rgba(230,230,230,0.7);*/
+}
+.icons-item{
+    width: 8%;
+    height: 29%;
+    margin-left: 5px;
+}
+
 
 .block1{
     position: absolute;
-    width: 90%;
+    width: 80%;
     height: 30%;
     display: flex;
-    top: 1%;
-    left: 5%;
+    top: 16%;
+    left: 10%;
     background-color: rgba(230,230,230,0.7);
 }
 .song{
