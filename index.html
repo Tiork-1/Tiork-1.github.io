@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>HAMBURG</title>
     <link rel="stylesheet" href="index.css">
-    <link rel="shortcut icon" href="./static/images/pikaqiu.png" type="image/x-icon">
+    <link rel="shortcut icon" href="static/images/icons/Q.png" type="image/x-icon">
 </head>
 <body>
 
@@ -12,31 +12,73 @@
 
 <div class="responsive-block" >
     <div id="head-area" class="block block1" >
-        <img src="./static/images/head01.jpg" alt="" class="head-image" id="head-image">
+        <div class = "song-image-block">
+            <img src="static/images/UI/wallhaven-zywrgv.jpg" alt="" class="song-image">
+        </div>
         <div class="song">
             <span class="song-name song-block">天天</span>
             <span class="songer song-block">陶喆</span>
             <span class="song-word1 song-block">太阳天或下雨天</span>
             <span class="song-word2 song-block">人挤人的咖啡店</span>
-            <span class="song-word3 song-block">找一个能想你舒服的角落</span>
+            <span class="song-word3 song-block">找一个能想你</span>
+            <span class="song-word4 song-block">舒服的角落</span>
         </div>
-        <div class="icons">
-            <!--            <img >-->
-            <!--            各种跳转，博客园，邮箱，github，抖音，厦大，羽毛球，篮球，其他网站等-->
-            <img src="./static/images/icons/github.png" alt="" class="icons-item">
-            <img src="./static/images/icons/博客园.png" alt="" class="icons-item">
-            <img src="./static/images/icons/抖音.png" alt="" class="icons-item">
-            <img src="./static/images/icons/邮箱.png" alt="" class="icons-item">
-            <img src="./static/images/icons/微信.png" alt="" class="icons-item">
-            <img src="./static/images/icons/羽毛球.png" alt="" class="icons-item">
-            <img src="./static/images/icons/篮球.png" alt="" class="icons-item">
-            <img src="./static/images/icons/25桌游版.png" alt="" class="icons-item">
-        </div>
+
     </div>
+    <div class="tags">
+        <a href="./static/html-album/album.html"><span class="tag-item-word tag-album">相册</span></a>
+        <a href="https://music.163.com/#/user?id=1997037388">
+            <span class="tag-item-word tag-cloudmusic">网易云</span></a>
+        <a href="https://github.com/Tiork-1">
+            <span class="tag-item-word tag-github">Github</span></a>
+        <a onclick="showImage('./static/images/other/WechatIMG67.jpg')">
+            <span class="tag-item-word tag-wechat">微信</span></a>
+        <a href="mailto:xinhan1106@qq.com">
+            <span class="tag-item-word tag-email">邮箱</span></a>
+        <a href="https://v.douyin.com/iAySfHHx/">
+            <span class="tag-item-word tag-tiktok">抖音</span></a>
+        <span class="tag-item-word tag-address">福建 厦门</span>
+        <span class="tag-item-word tag-star">射手</span>
+        <span id="currentTime" class="tag-item-word tag-time">16:05</span>
+        <span id="currentDate" class="tag-item-word tag-date">11月09号 星期日</span>
+        <span class="tag-item-word tag-mbti">ENTJ-T</span>
+
+
+
+    </div>
+
 
 <!--    相册，时钟，有趣小网站，每日一句-->
 </div>
 
+
+<div class="overlay" id="overlay" onclick="hideImage()">
+    <img id="overlayImage" src="" alt="大图">
+</div>
+
+<script>
+
+    // 实时更新时间的函数
+    function updateTime() {
+        const now = new Date();
+
+        // 获取当前时间和日期
+        const hours = String(now.getHours()).padStart(2, '0'); // 补零
+        const minutes = String(now.getMinutes()).padStart(2, '0'); // 补零
+        const day = now.getDate();
+        const month = now.toLocaleString('zh-CN', { month: 'long' }); // 中文月份
+        const weekDay = now.toLocaleString('zh-CN', { weekday: 'long' }); // 中文星期
+
+        // 更新HTML中的时间和日期内容
+        document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
+        document.getElementById('currentDate').textContent = `${month}${day}号 ${weekDay}`;
+    }
+    // 每分钟更新一次时间
+    setInterval(updateTime, 60000);
+
+    // 首次调用以立即显示时间
+    updateTime();
+</script>
 
 <script type="text/javascript" src="index.js"></script>
 </body>

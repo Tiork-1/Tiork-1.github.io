@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的相册 📸</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        .thumbnail {
+            width: 150px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body onload="loadAlbum()">
+<div class="gallery" id="gallery">
+    <!-- 假设你的图像命名为 image1.jpg, image2.jpg ... 在 album 文件夹中 -->
+<!--    <img src="../images/album/wallhaven-vqvx3l.jpg" class="thumbnail" onclick="showImage('../images/album/wallhaven-vqvx3l.jpg')" alt="图像1">-->
+    <!-- 继续为你的所有图像添加缩略图 -->
+</div>
+
+<div class="overlay" id="overlay" onclick="hideImage()">
+    <img id="overlayImage" src="" alt="大图">
+</div>
+
+<script>
+    function showImage(src) {
+        const overlay = document.getElementById('overlay');
+        const overlayImage = document.getElementById('overlayImage');
+        overlayImage.src = src;
+        overlay.style.display = 'flex';
+    }
+
+    function hideImage() {
+        const overlay = document.getElementById('overlay');
+        overlay.style.display = 'none';
+    }
+
+    function loadAlbum() {
+        const gallery = document.getElementById('gallery');
+        console.log(gallery)
+        for (let i = 0; i <= 17; i++) {
+            console.log(`load image ${i}`);
+            const imgElement = document.createElement('img');
+            imgElement.src = `../images/album/${i.toString()}.jpg`;
+            imgElement.className = 'thumbnail';
+            imgElement.onclick = () => showImage(imgElement.src);
+            imgElement.alt = ``;
+            console.log(imgElement)
+            gallery.appendChild(imgElement);
+
+        }
+    }
+</script>
+
+</body>
+</html>

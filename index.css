@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: center; /* 水平方向居中 */
     align-items: center;    /* 垂直方向居中 */
-    background-image: url('static/images/wallhaven-5gxqv8.jpg'); /* 替换为你的图片路径 🌄 */
+    background-image: url('static/images/UI/wallhaven-5gxqv8.jpg'); /* 替换为你的图片路径 🌄 */
     background-size: cover; /* 保持图像比例并覆盖整个屏幕 📸 */
     background-position: center; /* 将图像中心放置于可视区域中心 🎯 */
     background-repeat: no-repeat; /* 防止背景图像重复 🚫 */
@@ -12,6 +12,10 @@ body {
 
 @font-face {
     font-family: 'apple';
+    src:url("static/font/No.136-ShangShouYouRanTi-2.ttf");
+}
+@font-face {
+    font-family: 'pingfang';
     src:url("static/font/apple.ttf");
 }
 
@@ -19,7 +23,7 @@ body {
     position: absolute;
     color: white;
     font-weight: bold;
-    font-family: myfont;
+    font-family: apple;
     /*font-size: clamp(2.3vw,2.3vw,2.3vw);*/
 }
 .song-name{
@@ -33,7 +37,9 @@ body {
 .songer{
     position: absolute;
     top: 14%;
-    left: 45%;
+
+    font-family: pingfang;
+    left: 50%;
     color: rgba(50,50,50,0.4);
     font-weight: bold;
     font-size: clamp(1.3vh, 2vh, 2vh);
@@ -59,7 +65,13 @@ body {
     color: rgba(50,50,50,0.5);
     font-size: clamp(1vh, 1.7vh, 10vh);
 }
-
+.song-word4{
+    position: absolute;
+    top: 100%;
+    left: 10%;
+    color: rgba(50,50,50,0.5);
+    font-size: clamp(1vh, 1.7vh, 10vh);
+}
 
 .icons{
     position: absolute;
@@ -79,32 +91,43 @@ body {
 
 .block1{
     position: absolute;
-    width: 80%;
-    height: 30%;
+    width: 70%;
+    height: 40%;
     display: flex;
     top: 16%;
-    left: 10%;
-    background-color: rgba(230,230,230,0.7);
+    left: 15%;
+    background-color: rgba(255,255,255,0.9);
 }
 .song{
     position: absolute;
-    width: 50%;
+    width: 45%;
     height: 45%;
-    left: 40%;
-    top: 10%;
+    left: 54%;
+    top: 40%;
     /*background-color: rgba(230,230,230,0.7);*/
 }
 
-.head-image{
+.song-image-block{
     position: absolute;
-    width: 12vh;
-    height: 12vh;
-    border-radius: 100px;
-    left: 10%;
-    top: 10%;
-    opacity: 1;
-    box-shadow:0px 0px 15px rgba(100,100,100,1);
+    width: 54%;
+    overflow: hidden;
+    height: 100%;
+    /*background-color: aqua;*/
 }
+.song-image{
+    height: 100%;
+}
+
+/*.head-image{*/
+/*    position: absolute;*/
+/*    width: 12vh;*/
+/*    height: 12vh;*/
+/*    border-radius: 500px;*/
+/*    left: 10%;*/
+/*    top: 10%;*/
+/*    opacity: 1;*/
+/*    box-shadow:0px 0px 15px rgba(100,100,100,1);*/
+/*}*/
 
 .responsive-block {
     position: relative;
@@ -122,9 +145,103 @@ body {
 
 .block{
     box-shadow:0px 0px 10px rgba(100,100,100,1);
-    border-radius: 15px;
+    border-radius: 0px;
 }
 .block:hover{
-    box-shadow: 0px 0px 20px rgba(60,60,60,1);
+    box-shadow: 0px 0px 50px rgba(60,60,60,1);
     transition-duration: 0.1s;
+}
+
+.tags{
+    position: absolute;
+    width: 100%;
+    height: 40%;
+    top: 60%;
+    /*background-color: rgba(255,255,255,0.2);*/
+}
+
+.tag-item-word{
+    position: absolute;
+    font-family: apple;
+}
+.tag-album{
+    left: 60%;
+    bottom: 75%;
+    font-size: clamp(0vh, 5.8vh, 13vh);
+    color: #6c18a5;
+}
+.tag-wechat{
+    left: 40%;
+    bottom: 41.5%;
+    font-size: clamp(0vh, 3.0vh, 13vh);
+    color: #178362;
+}
+.tag-cloudmusic{
+    margin-bottom: 0%;
+    left: 60%;
+    bottom: 24%;
+    font-size: clamp(0vh, 5.8vh, 13vh);
+    color: chocolate;
+}
+.tag-email{
+    left: 13%;
+    bottom: 40%;
+    font-size: clamp(0vh, 5.5vh, 13vh);
+    color: darkcyan;
+}
+.tag-mbti{
+    left: 60%;
+    bottom: 58.5%;
+    font-size: clamp(0vh, 4.6vh, 13vh);
+    color: brown;
+}
+.tag-address{
+    left: 60%;
+    bottom: 42%;
+    font-size: clamp(0vh, 2.8vh, 13vh);
+}
+.tag-star{
+    left: 24%;
+    bottom: 25%;
+    font-size: clamp(0vh, 2.5vh, 13vh);
+}
+.tag-github{
+    /*margin: 0px;*/
+    left: 36%;
+    bottom: 24.0%;
+    font-size: clamp(0vh, 3.8vh, 13vh);
+    color: #1f363c;
+}
+.tag-tiktok{
+    left: 12%;
+    bottom: 25%;
+    font-size: clamp(0vh, 2.5vh, 13vh);
+}
+.tag-time{
+    left: 12%;
+    bottom: 73%;
+    font-size: clamp(0vh, 6.8vh, 13vh);
+}
+.tag-date{
+    left: 12%;
+    bottom: 60%;
+    font-size: clamp(0vh, 2.8vh, 13vh);
+}
+
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.overlay img {
+    max-width: 90%;
+    max-height: 90%;
 }
