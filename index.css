@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: center; /* 水平方向居中 */
     align-items: center;    /* 垂直方向居中 */
-    background-image: url('static/images/UI/wallhaven-ex52kw.png'); /* 替换为你的图片路径 🌄 */
+    background-image: url('static/images/UI/wallhaven-ex52kw.jpg'); /* 替换为你的图片路径 🌄 */
     background-size: cover; /* 保持图像比例并覆盖整个屏幕 📸 */
     background-position: center; /* 将图像中心放置于可视区域中心 🎯 */
     background-repeat: no-repeat; /* 防止背景图像重复 🚫 */
