@@ -69,8 +69,8 @@
     function loadAlbum() {
         const gallery = document.getElementById('gallery');
         console.log(gallery)
-        for (let i = 0; i <= 17; i++) {
-            console.log(`load image ${i}`);
+        for (let i = 0; i <= 100; i++) {
+            // console.log(`load image ${i}`);
             const imgElement = document.createElement('img');
             imgElement.src = `../images/album/${i.toString()}.jpg`;
             imgElement.className = 'thumbnail';
