@@ -28,7 +28,7 @@ body {
 .song-block{
     position: absolute;
     color: white;
-    /*font-weight: lighter;*/
+    font-weight: lighter;
     font-family: yezigong;
     /*font-size: clamp(2.3vw,2.3vw,2.3vw);*/
 }
@@ -168,7 +168,7 @@ body {
 
 .tag-item-word{
     position: absolute;
-    /*font-weight: lighter;*/
+    font-weight: lighter;
     font-family: yezigong;
 }
 .tag-album{
