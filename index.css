@@ -162,6 +162,7 @@ body {
 
 .tag-item-word{
     position: absolute;
+    font-weight: bold;
     font-family: apple;
 }
 .tag-album{
@@ -225,7 +226,19 @@ body {
 .tag-date{
     left: 12%;
     bottom: 60%;
-    font-size: clamp(0vh, 2.8vh, 13vh);
+    font-size: clamp(0vh, 2.6vh, 13vh);
+}
+.tag-cnblog{
+    left: 11.4%;
+    bottom: 6%;
+    font-size: clamp(0vh, 5.0vh, 13vh);
+    color: #b6b5b5;
+}
+.bocchi-gif{
+    position: absolute;
+    width: 15vh;
+    bottom: 4%;
+    left: 60%;
 }
 
 
