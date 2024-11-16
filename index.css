@@ -10,20 +10,26 @@ body {
     background-repeat: no-repeat; /* 防止背景图像重复 🚫 */
 }
 
+/*@font-face {*/
+/*    font-family: 'apple';*/
+/*    !*font-weight: bold;*!*/
+/*    src:url("static/font/No.136-ShangShouYouRanTi-2.ttf");*/
+/*}*/
 @font-face {
-    font-family: 'apple';
-    src:url("static/font/No.136-ShangShouYouRanTi-2.ttf");
+    font-family: 'yezigong';
+    /*font-weight: bold;*/
+    src:url("static/font/YeZiGongChangTangYingHei-2.ttf");
 }
-@font-face {
-    font-family: 'pingfang';
-    src:url("static/font/apple.ttf");
-}
+/*@font-face {*/
+/*    font-family: 'pingfang';*/
+/*    src:url("static/font/apple.ttf");*/
+/*}*/
 
 .song-block{
     position: absolute;
     color: white;
-    font-weight: bold;
-    font-family: apple;
+    font-weight: lighter;
+    font-family: yezigong;
     /*font-size: clamp(2.3vw,2.3vw,2.3vw);*/
 }
 .song-name{
@@ -162,13 +168,13 @@ body {
 
 .tag-item-word{
     position: absolute;
-    font-weight: bold;
-    font-family: apple;
+    font-weight: lighter;
+    font-family: yezigong;
 }
 .tag-album{
     left: 60%;
     bottom: 75%;
-    font-size: clamp(0vh, 5.8vh, 13vh);
+    font-size: clamp(0vh, 5.0vh, 13vh);
     color: #6c18a5;
 }
 .tag-wechat{
@@ -181,7 +187,7 @@ body {
     margin-bottom: 0%;
     left: 60%;
     bottom: 24%;
-    font-size: clamp(0vh, 5.8vh, 13vh);
+    font-size: clamp(0vh, 5.2vh, 13vh);
     color: chocolate;
 }
 .tag-email{
@@ -210,7 +216,7 @@ body {
     /*margin: 0px;*/
     left: 36%;
     bottom: 24.0%;
-    font-size: clamp(0vh, 3.8vh, 13vh);
+    font-size: clamp(0vh, 3.4vh, 13vh);
     color: #1f363c;
 }
 .tag-tiktok{
