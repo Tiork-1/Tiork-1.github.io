@@ -216,7 +216,7 @@ body {
     /*margin: 0px;*/
     left: 36%;
     bottom: 24.0%;
-    font-size: clamp(0vh, 3.4vh, 13vh);
+    font-size: clamp(0vh, 3.0vh, 13vh);
     color: #1f363c;
 }
 .tag-tiktok{
