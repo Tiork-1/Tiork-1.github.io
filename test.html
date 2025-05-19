@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+      margin: 0;
+    }
+    .bocchi-gif {
+      position: absolute;
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+<img src="https://wxgame-images.oss-cn-beijing.aliyuncs.com/bocchi.gif" class="bocchi-gif">
+
+<script>
+  console.log("TEST!");
+  const img = document.getElementById("bocchi");
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+  let directionX = Math.random() > 0.5 ? 1 : -1;
+  let directionY = Math.random() > 0.5 ? 1 : -1;
+
+  function moveImage() {
+    const stepSize = 5;
+    if (x + img.width >= window.innerWidth || x <= 0) {
+      directionX *= -1;
+    }
+    if (y + img.height >= window.innerHeight || y <= 0) {
+      directionY *= -1;
+    }
+
+    x += directionX * stepSize;
+    y += directionY * stepSize;
+
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
+
+    // Flip image based on direction
+    if (directionX === 1) {
+      img.style.transform = 'scaleX(-1)';
+    } else {
+      img.style.transform = 'scaleX(1)';
+    }
+
+    requestAnimationFrame(moveImage);
+  }
+
+  moveImage();
+</script>
+</body>
+</html>
+
+
+

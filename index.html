@@ -28,25 +28,25 @@
 
     </div>
     <div class="tags">
-        <a href="./static/html-album/album.html"><span class="tag-item-word tag-album">相册</span></a>
+        <a href="./static/html-album/album.html"><span class="tag-item-word tag-album move_item">相册</span></a>
         <a href="https://music.163.com/#/user?id=1997037388">
-            <span class="tag-item-word tag-cloudmusic">网易云</span></a>
+            <span class="tag-item-word tag-cloudmusic move_item">网易云</span></a>
         <a href="https://github.com/Tiork-1">
-            <span class="tag-item-word tag-github">Github</span></a>
+            <span class="tag-item-word tag-github move_item">Github</span></a>
         <a onclick="showImage('./static/images/other/WechatIMG67.jpg')">
-            <span class="tag-item-word tag-wechat">微信</span></a>
+            <span class="tag-item-word tag-wechat move_item">微信</span></a>
         <a href="mailto:xinhan1106@qq.com">
-            <span class="tag-item-word tag-email">邮箱</span></a>
+            <span class="tag-item-word tag-email move_item">邮箱</span></a>
         <a href="https://v.douyin.com/iAySfHHx/">
-            <span class="tag-item-word tag-tiktok">抖音</span></a>
-        <span class="tag-item-word tag-address">福建 厦门</span>
-        <span class="tag-item-word tag-star">射手</span>
+            <span class="tag-item-word tag-tiktok move_item">抖音</span></a>
+        <span class="tag-item-word tag-address move_item">福建 厦门</span>
+        <span class="tag-item-word tag-star move_item">射手</span>
         <span id="currentTime" class="tag-item-word tag-time">16:05</span>
         <span id="currentDate" class="tag-item-word tag-date">11月09号 星期日</span>
-        <span class="tag-item-word tag-mbti">ENTJ-T</span>
+        <span class="tag-item-word tag-mbti move_item">ENTJ-T</span>
         <a href="https://www.cnblogs.com/Tiork">
-            <span class="tag-item-word tag-cnblog">博客</span></a>
-        <img src="https://wxgame-images.oss-cn-beijing.aliyuncs.com/bocchi.gif" class="bocchi-gif">
+            <span class="tag-item-word tag-cnblog move_item">博客</span></a>
+<!--        <img src="https://wxgame-images.oss-cn-beijing.aliyuncs.com/bocchi.gif" id="bocchi" class="bocchi-gif">-->
 
 
 
@@ -60,6 +60,8 @@
 <div class="overlay" id="overlay" onclick="hideImage()">
     <img id="overlayImage" src="" alt="大图">
 </div>
+
+<img src="https://wxgame-images.oss-cn-beijing.aliyuncs.com/bocchi.gif" id="bocchi" class="bocchi-gif">
 
 <script>
 
@@ -83,7 +85,70 @@
 
     // 首次调用以立即显示时间
     updateTime();
+
+
+
 </script>
+<script>
+    const items = document.querySelectorAll('.move_item');
+
+    function applyShakeEffect() {
+        items.forEach(item => {
+            if (Math.random() < 0.3) {
+                item.classList.add('shake');
+                setTimeout(() => {
+                    item.classList.remove('shake');
+                }, 300);
+            }
+        });
+    }
+
+    setInterval(applyShakeEffect, 2000);
+</script>
+
+<script>
+    const img_1 = document.getElementById("bocchi");
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+    let directionX = Math.random() > 0.5 ? 1 : -1;
+    let directionY = Math.random() > 0.5 ? 1 : -1;
+    let speed = 0.1;
+
+    function moveImage() {
+        const stepSize = 5;
+        if (x + img_1.width >= window.innerWidth) {
+            directionX = -1;
+        }
+        if ( x<=0 ){
+            directionX = 1;
+        }
+        if (y + img_1.height >= window.innerHeight) {
+            directionY = -1;
+        }
+
+        if ( y <= 0 ){
+            directionY = 1;
+        }
+
+        x += directionX * stepSize * speed;
+        y += directionY * stepSize * speed * 0.3;
+
+        img_1.style.left = `${x}px`;
+        img_1.style.top = `${y}px`;
+
+        // Flip image based on direction
+        if (directionX === 1) {
+            img_1.style.transform = 'scaleX(-1)';
+        } else {
+            img_1.style.transform = 'scaleX(1)';
+        }
+
+        requestAnimationFrame(moveImage);
+    }
+
+    moveImage();
+</script>
+
 
 <script type="text/javascript" src="index.js"></script>
 </body>
