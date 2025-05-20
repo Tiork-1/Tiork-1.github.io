@@ -18,12 +18,12 @@
             <img src="https://wxgame-images.oss-cn-beijing.aliyuncs.com/741732090431_.pic.jpg" alt="" class="song-image">
         </div>
         <div class="song">
-            <span class="song-name song-block">千禧年代</span>
-            <span class="songer song-block">KEY.L 刘聪</span>
-            <span class="song-word1 song-block">淡橘色的天明</span>
-            <span class="song-word2 song-block">倒映在你的眼底</span>
-            <span class="song-word3 song-block">时间回到千禧</span>
-            <span class="song-word4 song-block">约好去逛天琴</span>
+            <span class="song-name song-block">别怕变老</span>
+            <span class="songer song-block">王以太/艾热</span>
+            <span class="song-word1 song-block">光阴的故事说实话</span>
+            <span class="song-word2 song-block">没经历也不懂</span>
+            <span class="song-word3 song-block">也只能珍惜眼前</span>
+            <span class="song-word4 song-block">为了不成为他的附庸</span>
         </div>
 
     </div>
@@ -86,12 +86,9 @@
     // 首次调用以立即显示时间
     updateTime();
 
-
-
 </script>
 <script>
     const items = document.querySelectorAll('.move_item');
-
     function applyShakeEffect() {
         items.forEach(item => {
             if (Math.random() < 0.3) {
@@ -149,6 +146,116 @@
     moveImage();
 </script>
 
+<!--const texts = ["在卖掉","坏掉","的过去","那哀悼的风","吹过世界","的一切","都结束后","夜里","酒杯","在互相碰撞","帮我","把这","破碎","的生活","给补救"];-->
+<script>
+    const texts = [
+        ["在卖掉","坏掉","的过去","那哀悼的风","吹过世界","的一切","都结束后","夜里","酒杯","在互相碰撞","帮我","把这","破碎","的生活","给补救"],
+        [
+            "我从来没爱过",
+            "我会这样做",
+            "从来没爱过",
+            "所以爱错",
+            "从哪里起飞",
+            "从哪里降落",
+            "多少不能原谅的错",
+            "却不能重来过"
+        ],
+        [
+            "岁月变迁",
+            "是这世界定的规矩",
+            "老天派我来",
+            "保证它不会让你痛苦",
+            "就算错过了",
+            "朝霞夕阳一样美丽",
+            "我还开着车",
+            "陪你一起享受这段拥堵"
+        ],
+        [
+            "我从没忘记",
+            "爱慕你的初衷",
+            "迷恋你的特别",
+            "尽管我们都很普通",
+            "光阴的故事",
+            "说实话没经历也不懂",
+            "也只能珍惜眼前",
+            "为了不成为他的附庸"
+        ],
+        [
+            "我仰慕你的",
+            "自然你的优雅",
+            "我会大声向你表白",
+            "虽然肉麻",
+            "但你了解我的",
+            "这不是冲动",
+            "酒话守卫着你",
+            "直到掉光我的头发"
+        ],
+        [
+            "感谢你的出现",
+            "过去的往事",
+            "就如烟在眼前",
+            "什么都不欠",
+            "你是下雨时的屋檐"
+        ]
+    ];
+
+    let currentGroup = null;
+    let currentIndex = 0;
+    let timeoutId = null;
+
+    // 随机选择一个新的子数组
+    function selectRandomGroup() {
+        currentGroup = texts[Math.floor(Math.random() * texts.length)];
+        currentIndex = 0;
+    }
+
+    // 随机颜色生成函数
+    function getRandomColor() {
+        const r = Math.floor(Math.random() * 200 + 55); // 避免太暗
+        const g = Math.floor(Math.random() * 200 + 55);
+        const b = Math.floor(Math.random() * 200 + 55);
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    // 显示下一文字
+    function showNextText(x, y) {
+        if (!currentGroup || currentIndex >= currentGroup.length) return;
+
+        const text = currentGroup[currentIndex];
+        currentIndex++;
+
+        const span = document.createElement("span");
+        span.className = "drop-text";
+        span.textContent = text;
+
+        span.style.color = getRandomColor();
+
+        span.style.left = x + "px";
+        span.style.top = y + "px";
+
+        document.body.appendChild(span);
+
+        span.addEventListener("animationend", () => {
+            span.remove();
+        });
+    }
+
+    // 重置超时器
+    function resetTimer() {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(selectRandomGroup, 2000); // 超过3秒未点击，换一组
+    }
+
+    // 初始随机选一组
+    selectRandomGroup();
+    resetTimer();
+
+    // 监听点击事件
+    document.body.addEventListener("click", function (e) {
+        showNextText(e.clientX, e.clientY);
+        resetTimer();
+    });
+</script>
 
 <script type="text/javascript" src="index.js"></script>
 </body>
