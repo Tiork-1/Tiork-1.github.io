@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>谁是卧底</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --bg: #f5f6fa;
+            --text: #2f3640;
+            --card-bg: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        h1 { margin-bottom: 30px; color: var(--text); font-size: 28px;}
+        .screen { display: none; width: 100%; max-width: 400px; background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .screen.active { display: block; }
+        .btn { display: block; width: 100%; padding: 15px; margin-bottom: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; text-align: center; font-weight: bold; }
+        .btn:active { opacity: 0.8; }
+        .btn.secondary { background-color: #7f8fa6; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 14px; color: #718093; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #dcdde1; border-radius: 6px; font-size: 16px; }
+        #qrcode { display: flex; justify-content: center; margin: 20px 0; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+        .number-btn { padding: 15px 0; background: #e1b12c; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .number-btn.disabled { background: #dcdde1; cursor: not-allowed; }
+        .word-card { height: 200px; display: flex; align-items: center; justify-content: center; background: #e1b12c; color: white; border-radius: 12px; font-size: 40px; font-weight: bold; cursor: pointer; margin-bottom: 20px; transition: 0.3s; }
+        .judge-list { margin-top: 20px; text-align: left; }
+        .judge-list p { padding: 8px 0; border-bottom: 1px solid #eee; font-size: 16px;}
+    </style>
+</head>
+<body>
+
+    <h1>谁是卧底</h1>
+
+    <!-- 0. 身份选择界面 -->
+    <div id="screen-home" class="screen active">
+        <button class="btn" onclick="navTo('screen-setup')">我是法官 (创建游戏)</button>
+        <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #7f8fa6;">
+            玩家请直接扫描法官的二维码<br>无需在此点击
+        </div>
+    </div>
+
+    <!-- 1. 法官设置界面 -->
+    <div id="screen-setup" class="screen">
+        <div class="form-group">
+            <label>玩家总人数</label>
+            <input type="number" id="input-total" value="6" min="3">
+        </div>
+        <div class="form-group">
+            <label>卧底人数</label>
+            <input type="number" id="input-spy" value="1" min="1">
+        </div>
+        <div class="form-group">
+            <label>白板人数</label>
+            <input type="number" id="input-blank" value="0" min="0">
+        </div>
+        <div class="form-group">
+            <label>平民词</label>
+            <input type="text" id="input-civilian-word" placeholder="例如：苹果">
+        </div>
+        <div class="form-group">
+            <label>卧底词</label>
+            <input type="text" id="input-spy-word" placeholder="例如：香蕉">
+        </div>
+        <button class="btn" onclick="generateGame()">生成游戏二维码</button>
+        <button class="btn secondary" onclick="navTo('screen-home')">返回</button>
+    </div>
+
+    <!-- 3. 法官视角界面 -->
+    <div id="screen-judge-view" class="screen">
+        <h2 style="text-align: center; margin-bottom: 10px;">让玩家扫码获取词语</h2>
+        <div id="qrcode"></div>
+        <p style="text-align: center; font-size: 12px; color: #e84118; margin-bottom: 20px;">(法官请注意遮挡下方答案)</p>
+        <div class="judge-list" id="judge-answers"></div>
+        <button class="btn secondary" onclick="navTo('screen-home')" style="margin-top: 20px;">结束游戏</button>
+    </div>
+
+    <!-- 2. 玩家选号界面 -->
+    <div id="screen-player-select" class="screen">
+        <h3 style="text-align: center; margin-bottom: 20px;">请选择你的号码</h3>
+        <div class="grid" id="player-grid"></div>
+    </div>
+
+    <!-- 玩家查看词语界面 -->
+    <div id="screen-word-view" class="screen">
+        <p style="text-align: center; margin-bottom: 10px; color: #718093;">点击卡片翻转</p>
+        <div class="word-card" id="word-card" onclick="toggleWord()">
+            <span id="card-content"></span>
+        </div>
+        <button class="btn secondary" onclick="navTo('screen-player-select')">返回选号列表</button>
+    </div>
+
+    <script>
+        let currentGameData = [];
+        let currentPlayerNumber = 0;
+        let isShowingWord = false;
+
+        // 导航控制
+        function navTo(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // 页面加载时检查网址是否携带参数
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('d');
+            if (dataParam) {
+                try {
+                    // 解码获取打乱后的词库快照
+                    const decodedStr = decodeURIComponent(atob(dataParam));
+                    currentGameData = JSON.parse(decodedStr);
+                    renderPlayerGrid();
+                    navTo('screen-player-select');
+                } catch (e) {
+                    alert("二维码数据解析失败！");
+                    navTo('screen-home');
+                }
+            }
+        };
+
+        // 核心洗牌算法：类似发牌前打乱数组
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // 法官：生成游戏
+        function generateGame() {
+            const total = parseInt(document.getElementById('input-total').value);
+            const spy = parseInt(document.getElementById('input-spy').value);
+            const blank = parseInt(document.getElementById('input-blank').value);
+            const cWord = document.getElementById('input-civilian-word').value;
+            const sWord = document.getElementById('input-spy-word').value;
+
+            if (spy + blank >= total) {
+                alert("卧底和白板的人数总和必须小于总人数！");
+                return;
+            }
+            if (!cWord || !sWord) {
+                alert("请输入平民词和卧底词！");
+                return;
+            }
+
+            let roles = [];
+            for (let i = 0; i < spy; i++) roles.push({ role: '卧底', word: sWord });
+            for (let i = 0; i < blank; i++) roles.push({ role: '白板', word: '（白板）' });
+            for (let i = 0; i < (total - spy - blank); i++) roles.push({ role: '平民', word: cWord });
+
+            shuffleArray(roles);
+            currentGameData = roles;
+
+            // 渲染法官底部的答案列表
+            const answersDiv = document.getElementById('judge-answers');
+            answersDiv.innerHTML = `<h3>底牌记录</h3>`;
+            roles.forEach((r, index) => {
+                answersDiv.innerHTML += `<p><strong>${index + 1}号</strong> : ${r.role} - [${r.word}]</p>`;
+            });
+
+            // 生成加密的URL参数
+            const dataStr = btoa(encodeURIComponent(JSON.stringify(roles)));
+            // 去除当前URL自带的参数，拼接新的数据
+            const baseUrl = window.location.href.split('?')[0]; 
+            const shareUrl = `${baseUrl}?d=${dataStr}`;
+
+            // 生成二维码
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById('qrcode'), {
+                text: shareUrl,
+                width: 200,
+                height: 200,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.L
+            });
+
+            navTo('screen-judge-view');
+        }
+
+        // 玩家：渲染选号网格
+        function renderPlayerGrid() {
+            const grid = document.getElementById('player-grid');
+            grid.innerHTML = '';
+            currentGameData.forEach((_, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'number-btn';
+                btn.innerText = index + 1;
+                btn.onclick = () => selectNumber(index);
+                grid.appendChild(btn);
+            });
+        }
+
+        // 玩家：选择号码
+        function selectNumber(index) {
+            currentPlayerNumber = index + 1;
+            isShowingWord = false;
+            updateCardDisplay();
+            navTo('screen-word-view');
+        }
+
+        // 玩家：点击卡片翻转显示词语或号码
+        function toggleWord() {
+            isShowingWord = !isShowingWord;
+            updateCardDisplay();
+        }
+
+        // 更新卡片视图逻辑
+        function updateCardDisplay() {
+            const card = document.getElementById('word-card');
+            const content = document.getElementById('card-content');
+            if (isShowingWord) {
+                card.style.background = '#e84118';
+                content.innerText = currentGameData[currentPlayerNumber - 1].word;
+            } else {
+                card.style.background = '#e1b12c';
+                content.innerText = currentPlayerNumber + "号";
+            }
+        }
+    </script>
+</body>
+</html>
